@@ -1,12 +1,7 @@
 <!DOCTYPE HTML>
-<!--
-	Phantom by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
-		<title>Phantom by HTML5 UP</title>
+		<title>Domont auto clean 95</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -20,7 +15,7 @@
 		  for(var i = 0; i < occasions.length; i++){
 				console.log(occasions[i]);
 				html+= '<article class="style'+style+'">';
-				html += '	<span class="image">';
+				html += '	<span style="height:200px; object-fit:contain;" class="image">';
 				html += '		<img src="images/'+occasions[i][2]+'" alt="" />';
 				html += '	</span>';
 				html += '	<a href="occasions.html?id='+occasions[i][0]+'">';
@@ -45,12 +40,12 @@
 			<div id="wrapper">
 
 				<!-- Header -->
-					<header id="header">
+					<header style='padding-top : 2rem;' id="header">
 						<div class="inner">
 
 							<!-- Logo -->
 								<a href="index.html" class="logo">
-									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Garage Godeau</span>
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Domont Auto Clean 95</span>
 								</a>
 
 							<!-- Nav
@@ -75,13 +70,33 @@
 
 				<!-- Main -->
 					<div id="main">
-						<div class="inner">
-							<header>
-								<h2>voitures d'occasions</h2>
-							</header>
-							<section class="tiles">
+						<div style='padding : 0;' class="inner">
+							<div style='padding:0 5%;'>
+								<header>
+									<h4>voitures d'occasions, lavage auto,<br>
+									Recherche de panne, révision et vidange, ...</h4>
+								</header>
+							</div>
 
-							</section>
+							<div style='background-color : lightgrey; padding: 0.8rem 5%; margin-bottom : 2rem;'>
+								<h3 style='margin:0;'>à propos</h3>
+							</div>
+							<div style='padding:0 2%;'>
+								<p>
+									Le garage Domont auto clean 95 est situé au 52 Rue du Chemin Vert 95330 Domont. Grage agréée. Peu importe vos besoins, le garage Domont auto clean 95 a toujours la solution pour vous.
+									Nous disposerons sur place d'un bureau afin de repondre à vos demandes.
+								</p>
+							</div>
+
+
+							<div style='background-color : lightgrey; padding: 0.8rem 5%; margin-bottom : 2rem;'>
+								<h3 style='margin:0;'>Nos occasions</h3>
+							</div>
+							<div style='padding:0 2%;'>
+								<section class="tiles">
+
+								</section>
+							</div>
 						</div>
 					</div>
 
@@ -91,6 +106,10 @@
 							<section>
 								<h2>Nous contacter</h2>
 								<form method="post" action="#">
+									<a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a> +33 6 65 44 46 44<br><br>
+									<a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a> contact@domontautoclean95.com<br><br>
+									<a href="#" class="icon solid style2 fa-map"><span class="label">Map</span></a> 52 Rue du Chemin Vert, 95330 Domont, France<br><br>
+
 									<div class="fields">
 										<div class="field half">
 											<input type="text" name="nom" id="nom" placeholder="Nom" />
@@ -113,16 +132,11 @@
 									<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
 									<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
 									<li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li>
-									<li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
-									<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+									<li></li>
+									<li></li>
 								</ul>
 							</section>
-							<ul class="copyright">
-								<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
+
 						</div>
 					</footer>
 

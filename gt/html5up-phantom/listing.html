@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  datas = [
+    {"numClient" : "CL0001", "name" : "Jean Dupont", "année" : 2017, "mois" : 08, "jour" : 25, "tarif" : "basic", "payé" : false, "tel" : "+32 495.73.45.32"},
+    {"numClient" : "CL0002", "name" : "Richard Daumont", "année" : 2018, "mois" : 05, "jour" : 17, "tarif" : "basic", "payé" : true , "tel" : "+32 495.73.45.32"},
+    {"numClient" : "CL0003", "name" : "Alphons Dunart", "année" : 2017, "mois" : 08, "jour" : 25, "tarif" : "basic", "payé" : false, "tel" : "+32 495.73.45.32"},
+    {"numClient" : "CL0004", "name" : "Kader moud", "année" : 2017, "mois" : 08, "jour" : 25, "tarif" : "basic", "payé" : true, "tel" : "+32 495.73.45.32"},
+    {"numClient" : "CL0005", "name" : "Chichi cahach", "année" : 2017, "mois" : 08, "jour" : 25, "tarif" : "basic", "payé" : true, "tel" : "+32 495.73.45.32"},
+  ]
+  $(document).ready(function(){
+    afficheTous(datas);
+    $('#allOfClients').click(function(){
+      afficheTous(datas);
+    });
+    $('#unpaid').click(function(){
+      unpaid(datas);
+    });
+
+    $('#paid').click(function(){
+      paid(datas);
+    });
+
+    $('#search').keyup(function(){
+      search($('#search').val(), datas);
+    });
+  });
+
+  function search(text, datas){
+    var htmlList = "";
+    for(var i = 0; i < datas.length; i++){
+      var uppercaseName = datas[i]["name"].toUpperCase();
+      var uppercaseNumClient = datas[i]["numClient"].toUpperCase();
+      var uppercaseText = text.toUpperCase();
+      var verifNumClient = uppercaseNumClient.includes(uppercaseText);
+      var verifName = uppercaseName.includes(uppercaseText);
+      if(verifNumClient || verifName){
+        var tot = totalCumul(datas[i]["jour"], datas[i]["mois"], datas[i]["année"])
+        if(datas[i]["payé"] == true){
+          htmlList += '<li aria-expanded="false" data-toggle="collapse" data-target="#'+datas[i]["numClient"]+'" aria-controls="#'+datas[i]["numClient"]+'" class="list-group-item bg-success text-white">';
+        } else {
+          htmlList += '<li aria-expanded="false" data-toggle="collapse" data-target="#'+datas[i]["numClient"]+'" class="list-group-item bg-danger text-white">';
+        }
+        htmlList += "<span class='zone'>"+ datas[i]["numClient"] +"</span>";
+        htmlList += "<span class='zone'>"+datas[i]["name"]+ "</span>";
+
+        htmlList += '</li>';
+        htmlList += '<div class="collapse multi-collapse" id="'+datas[i]['numClient']+'">'
+        htmlList += '<div class="bg-light card card-body">';
+        htmlList += "Tel :" + datas[i]["tel"]+ "<br>Abo : "+datas[i]["tarif"];
+        htmlList += '</div>';
+        htmlList += '</div>';
+      }
+    }
+    $('#list').html(htmlList);
+  }
+  function unpaid(datas){
+    var htmlList = "";
+    for(var i = 0; i < datas.length; i++){
+        if(datas[i]["payé"] == false){
+          var tot = totalCumul(datas[i]["jour"], datas[i]["mois"], datas[i]["année"])
+          htmlList += '<li aria-expanded="false" data-toggle="collapse" data-target="#'+datas[i]["numClient"]+'" class="list-group-item bg-danger text-white">';
+          htmlList += "<span class='zone'>"+ datas[i]["numClient"] +"</span>";
+          htmlList += "<span class='zone'>"+datas[i]["name"]+ "</span>";
+          htmlList += '</li>';
+          htmlList += '<div class="collapse multi-collapse" id="'+datas[i]['numClient']+'">'
+          htmlList += '<div class="bg-light card card-body">';
+          htmlList += "Tel :" + datas[i]["tel"]+ "<br>Abo : "+datas[i]["tarif"];
+          htmlList += '</div>';
+          htmlList += '</div>';
+        }
+    }
+    $('#list').html(htmlList);
+  }
+  function paid(datas){
+    var htmlList = "";
+    for(var i = 0; i < datas.length; i++){
+        if(datas[i]["payé"] == true){
+          var tot = totalCumul(datas[i]["jour"], datas[i]["mois"], datas[i]["année"])
+          htmlList += '<li aria-expanded="false" data-toggle="collapse" data-target="#'+datas[i]["numClient"]+'" class="list-group-item bg-success text-white">';
+          htmlList += "<span class='zone'>"+ datas[i]["numClient"] +"</span>";
+          htmlList += "<span class='zone'>"+datas[i]["name"]+ "</span>";
+          htmlList += '</li>';
+          htmlList += '<div class="collapse multi-collapse" id="'+datas[i]['numClient']+'">'
+          htmlList += '<div class="bg-light card card-body">';
+          htmlList += "Tel :" + datas[i]["tel"]+ "<br>Abo : "+datas[i]["tarif"];
+          htmlList += '</div>';
+          htmlList += '</div>';
+        }
+    }
+    $('#list').html(htmlList);
+  }
+  function afficheTous(datas){
+    var htmlList = "";
+    for(var i = 0; i < datas.length; i++){
+      var tot = totalCumul(datas[i]["jour"], datas[i]["mois"], datas[i]["année"])
+      if(datas[i]["payé"] == true){
+        htmlList += '<li aria-expanded="false" data-toggle="collapse" data-target="#'+datas[i]["numClient"]+'" aria-controls="#'+datas[i]["numClient"]+'" class="list-group-item bg-success text-white">';
+      } else {
+        htmlList += '<li aria-expanded="false" data-toggle="collapse" data-target="#'+datas[i]["numClient"]+'" class="list-group-item bg-danger text-white">';
+      }
+      htmlList += "<span class='zone'>"+ datas[i]["numClient"] +"</span>";
+      htmlList += "<span class='zone'>"+datas[i]["name"]+ "</span>";
+
+      htmlList += '</li>';
+      htmlList += '<div class="collapse multi-collapse" id="'+datas[i]['numClient']+'">'
+      htmlList += '<div class="bg-light card card-body">';
+      htmlList += "Tel :" + datas[i]["tel"]+ "<br>Abo : "+datas[i]["tarif"];
+      htmlList += '</div>';
+      htmlList += '</div>';
+    }
+    $('#list').html(htmlList);
+  }
+  function totalCumul(jour, mois, année){
+    var today = new Date();
+    var date = new Date(année, mois, jour);
+
+    var todayYear = today.getYear();
+    var todayMonth = today.getMonth();
+    var todayDay = today.getDay();
+
+    var dateYear = date.getYear();
+    var dateMonth = date.getMonth();
+    var dateDay = date.getDay();
+
+
+    var diffYear = todayYear - dateYear;
+    var diffMonth = todayMonth - dateMonth;
+
+    if(dateDay >= todayDay){
+      diffMonth ++
+    }
+
+    var totalMonth = diffMonth + diffYear * 12;
+    var total = totalMonth * 24.99;
+
+    return total;
+  }
+
+</script>
+
+<style>
+  .bg-light {
+    margin : 2%;
+    background-color : lightgrey!important;
+    border-radius : 3px;
+  }
+  .list-group {
+    margin : 0 2%;
+  }
+  .list-group-item {
+    margin : 0.5% 0;
+  }
+  .zone {
+    display : inline-block;
+    width : 19%;
+  }
+</style>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a id='allOfClients' class="nav-link" href="#">Tous</a>
+        </li>
+        <li class="nav-item">
+          <a id='unpaid' class="nav-link active" href="#">Impayé</a>
+        </li>
+        <li class="nav-item">
+          <a id='paid' class="nav-link active" href="#">Payé</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      </form>
+    </div>
+  </nav>
+  <ul id="list"  class="list-group"></ul>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+
+
+</html>
